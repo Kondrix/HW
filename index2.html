@@ -34,27 +34,15 @@
             align-items: center;
         }
 
-        input[type="number"] {
-            width: auto;
-            flex-grow: 1;
-            text-align: center;
-        }
+      
 
         .quantity-button {
             cursor: pointer;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 50%;
-            color:red;
         }
 
-        input[type="number"] {
-            width: auto;
-            flex-grow: 1;
-            text-align: center;
-            size: 3; /* Ustaw rozmiar pola number */
-        }
-        
         .highlight {
             background-color: yellow;
         }
@@ -81,9 +69,8 @@
             <td>10.00 zł</td>
             <td>
                 <div class="quantity-container">
-                    
-                    <input type="number" id="product1" value="0" min="0" oninput="calculateTotal()">
                     <span class="quantity-button" onclick="decrementQuantity('product1')">-</span>
+                    <input type="number" id="product1" value="0" min="0" oninput="calculateTotal()">
                     <span class="quantity-button" onclick="incrementQuantity('product1')">+</span>
                 </div>
             </td>
@@ -104,9 +91,8 @@
             <td>10.00 zł</td>
             <td>
                 <div class="quantity-container">
-                    
-                    <input type="number" id="product2" value="0" min="0" oninput="calculateTotal()">
                     <span class="quantity-button" onclick="decrementQuantity('product2')">-</span>
+                    <input type="number" id="product2" value="0" min="0" oninput="calculateTotal()">
                     <span class="quantity-button" onclick="incrementQuantity('product2')">+</span>
                 </div>
             </td>
@@ -151,7 +137,7 @@
                 const input = row.querySelector('input[type="number"]');
                 if (input) {
                     const quantity = parseFloat(input.value) || 0;
-                    if (quantity > 0) { 
+                    if (quantity > 0) {
                         row.classList.add('highlight');
                     } else {
                         row.classList.remove('highlight');
