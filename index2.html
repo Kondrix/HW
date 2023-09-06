@@ -50,18 +50,38 @@
         input {
             max-width: 30px;
         }
-
+        #koktajle-div
+        {
+            display: none;
+        }
+        #toggle
+        {
+            width: 100%;
+            height: 50px;
+            font-size: 15px;
+            font-weight: bold;
+        }
         @media screen and (max-width: 600px) {
             table {
                 font-size: 12px;
             }
         }
+        
     </style>
 </head>
 <body>
+    
+    <button id="toggle">Koktajle</button>
+    
+
+
+
+
+    <div id="koktajle-div">
+
     <h1>Koktajle</h1>
 
-    <table>
+    <table >
         <tr>
             <th>Produkt</th>
             <th>Cena jednostkowa</th>
@@ -214,10 +234,35 @@
         </tr>
         <!-- Pozostałe pozycje koktajli -->
     </table>
+</div>
 
+<button id="toggle">Shoty</button>
+    <button id="toggle">Piwo lane</button>
+    <button id="toggle">Piwo butelkowe</button>
+    <button id="toggle">Napoje 0,2L</button>
+    <button id="toggle">Soki 1L</button>
+    <button id="toggle">Wódka butelka</button>
+    <button id="toggle">Whisky butelka</button>
+    <button id="toggle">Wódki 40ML</button>
+    <button id="toggle">Whisky 40ML</button>
+    <button id="toggle">Inne 40ML</button>
+    <button id="toggle">Wino</button>
+
+    
     <p>Suma: <span id="grandTotal">0.00 zł</span></p>
 
     <script>
+               const targetDiv = document.getElementById("koktajle-div");
+                const btn = document.getElementById("toggle");
+                btn.onclick = function () {
+                if (targetDiv.style.display !== "block") {
+                   targetDiv.style.display = "block";
+                  } else {
+                   targetDiv.style.display = "none";
+                 }
+};
+
+
         // Funkcja obliczająca sumaryczną cenę produktów
         function calculateTotal() {
             const quantities = [
