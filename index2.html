@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+            margin: 0%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Koktajle</h1>
+
+    <table>
+        <tr>
+            <th>Produkt</th>
+            <th>Cena jednostkowa</th>
+            <th>Ilość</th>
+            <th>Suma</th>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product1" value="0" min="0"></td>
+            <td id="total1">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product2" value="0" min="0"></td>
+            <td id="total2">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product3" value="0" min="0"></td>
+            <td id="total3">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product4" value="0" min="0"></td>
+            <td id="total4">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product5" value="0" min="0"></td>
+            <td id="total5">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product6" value="0" min="0"></td>
+            <td id="total6">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product7" value="0" min="0"></td>
+            <td id="total7">0.00 zł</td>
+        </tr>
+        <tr>
+            <td>Produkt 1</td>
+            <td>10.00 zł</td>
+            <td><input type="number" id="product8" value="0" min="0"></td>
+            <td id="total8">0.00 zł</td>
+        </tr>
+        <!-- Pozostałe wiersze produktów -->
+    </table>
+
+    <p>Suma: <span id="grandTotal">0.00 zł</span></p>
+
+    <script>
+        // Funkcja obliczająca sumaryczną cenę produktów
+        function calculateTotal() {
+            const quantities = [
+                parseFloat(document.getElementById('product1').value) || 0,
+                parseFloat(document.getElementById('product2').value) || 0,
+                parseFloat(document.getElementById('product3').value) || 0,
+                parseFloat(document.getElementById('product4').value) || 0,
+                parseFloat(document.getElementById('product5').value) || 0,
+                parseFloat(document.getElementById('product6').value) || 0,
+                parseFloat(document.getElementById('product7').value) || 0,
+                parseFloat(document.getElementById('product8').value) || 0
+            ];
+
+            const prices = [10.00, 20.00, 10.00, 20.00, 10.00, 20.00, 10.00, 20.00]; // Ceny jednostkowe
+
+            let grandTotal = 0;
+
+            for (let i = 0; i < quantities.length; i++) {
+                const total = quantities[i] * prices[i];
+                grandTotal += total;
+                const totalId = 'total' + (i + 1);
+                document.getElementById(totalId).textContent = total.toFixed(2) + ' zł';
+            }
+
+            document.getElementById('grandTotal').textContent = grandTotal.toFixed(2) + ' zł';
+
+            // Podświetl wiersze z ilościami większymi od 0
+            highlightRows();
+        }
+
+        // Funkcja podświetlająca wiersze z ilościami większymi od 0
+        function highlightRows() {
+            const rows = document.querySelectorAll('tr');
+            rows.forEach(row => {
+                const input = row.querySelector('input[type="number"]');
+                if (input) {
+                    const quantity = parseFloat(input.value) || 0;
+                    if (quantity > 0) {
+                        row.classList.add('highlight');
+                    } else {
+                        row.classList.remove('highlight');
+                    }
+                }
+            });
+        }
+
+        // Nasłuchuj zmian w ilości produktów i oblicz sumę
+        const inputElements = document.querySelectorAll('input[type="number"]');
+        inputElements.forEach(input => {
+            input.addEventListener('input', calculateTotal);
+        });
+
+        // Wywołaj funkcję obliczeniową na początku, aby wyświetlić sumę początkową
+        calculateTotal();
+    </script>
+</body>
+</html>
