@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -20,11 +21,14 @@
             margin-bottom: 20px;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
         }
@@ -43,254 +47,520 @@
             margin-right: 5px;
         }
 
-        .highlight {
-            background-color: yellow;
-        }
-
         input {
             max-width: 30px;
         }
-        #koktajle-div
-        {
+
+        #koktajle-div,
+        #shoty-div,
+        #piwo-butelkowe-div,
+        #napoje-02l-div,
+        #soki-1l-div,
+        #wodka-butelka-div,
+        #whisky-butelka-div,
+        #wodki-40ml-div,
+        #whisky-40ml-div,
+        #inne-40ml-div {
             display: none;
         }
-        #toggle
-        {
+
+        .category-button {
             width: 100%;
             height: 50px;
             font-size: 15px;
             font-weight: bold;
         }
+
+        .highlight {
+            background-color: yellow;
+        }
+
         @media screen and (max-width: 600px) {
             table {
                 font-size: 12px;
             }
         }
-        
     </style>
 </head>
+
 <body>
-    
-    <button id="toggle">Koktajle</button>
-    
+    <div id="menu">
+        <!-- Kategoria Koktajle -->
+        <button class="category-button" onclick="toggleCategory('koktajle-div')">Koktajle</button>
 
+        <div id="koktajle-div" class="category-div">
 
+            <h1>Koktajle</h1>
 
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Old Fashioned</td>
+                    <td>27.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('product1', -1)">-</span>
+                            <input type="number" id="product1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('product1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Aperol Spritz</td>
+                    <td>28.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('product2', -1)">-</span>
+                            <input type="number" id="product2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('product2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe koktajle -->
+            </table>
+        </div>
 
-    <div id="koktajle-div">
+        <!-- Kategoria Shoty -->
+        <button class="category-button" onclick="toggleCategory('shoty-div')">Shoty</button>
 
-    <h1>Koktajle</h1>
+        <div id="shoty-div" class="category-div">
 
-    <table >
-        <tr>
-            <th>Produkt</th>
-            <th>Cena jednostkowa</th>
-            <th>Ilość</th>
-            <th>Suma</th>
-        </tr>
-        <tr>
-            <td>Old Fashioned</td>
-            <td>27.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product1', -1)">-</span>
-                    <input type="number" id="product1" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product1', 1)">+</span>
-                </div>
-            </td>
-            <td id="total1">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Aperol Spritz</td>
-            <td>28.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product2', -1)">-</span>
-                    <input type="number" id="product2" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product2', 1)">+</span>
-                </div>
-            </td>
-            <td id="total2">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Mojito</td>
-            <td>26.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product3', -1)">-</span>
-                    <input type="number" id="product3" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product3', 1)">+</span>
-                </div>
-            </td>
-            <td id="total3">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Mojito Free</td>
-            <td>22.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product4', -1)">-</span>
-                    <input type="number" id="product4" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product4', 1)">+</span>
-                </div>
-            </td>
-            <td id="total4">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Cuba Libre</td>
-            <td>24.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product5', -1)">-</span>
-                    <input type="number" id="product5" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product5', 1)">+</span>
-                </div>
-            </td>
-            <td id="total5">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Gin & Tonic</td>
-            <td>27.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product6', -1)">-</span>
-                    <input type="number" id="product6" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product6', 1)">+</span>
-                </div>
-            </td>
-            <td id="total6">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Sex on the Beach</td>
-            <td>26.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product7', -1)">-</span>
-                    <input type="number" id="product7" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product7', 1)">+</span>
-                </div>
-            </td>
-            <td id="total7">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Sex on the Beach Free</td>
-            <td>22.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product8', -1)">-</span>
-                    <input type="number" id="product8" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product8', 1)">+</span>
-                </div>
-            </td>
-            <td id="total8">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Whisky z Cola</td>
-            <td>24.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product9', -1)">-</span>
-                    <input type="number" id="product9" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product9', 1)">+</span>
-                </div>
-            </td>
-            <td id="total9">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Screwdriver Ultra+</td>
-            <td>27.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product10', -1)">-</span>
-                    <input type="number" id="product10" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product10', 1)">+</span>
-                </div>
-            </td>
-            <td id="total10">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Jagerbomb</td>
-            <td>28.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product11', -1)">-</span>
-                    <input type="number" id="product11" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product11', 1)">+</span>
-                </div>
-            </td>
-            <td id="total11">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Long Island</td>
-            <td>33.00 zł</td>
-            <td>
-                <div class="quantity-container">
-                    <span class="quantity-button" onclick="changeQuantity('product12', -1)">-</span>
-                    <input type="number" id="product12" value="0" min="0" oninput="calculateTotal()">
-                    <span class="quantity-button" onclick="changeQuantity('product12', 1)">+</span>
-                </div>
-            </td>
-            <td id="total12">0.00 zł</td>
-        </tr>
-        <!-- Pozostałe pozycje koktajli -->
-    </table>
-</div>
+            <h1>Shoty</h1>
 
-<button id="toggle">Shoty</button>
-    <button id="toggle">Piwo lane</button>
-    <button id="toggle">Piwo butelkowe</button>
-    <button id="toggle">Napoje 0,2L</button>
-    <button id="toggle">Soki 1L</button>
-    <button id="toggle">Wódka butelka</button>
-    <button id="toggle">Whisky butelka</button>
-    <button id="toggle">Wódki 40ML</button>
-    <button id="toggle">Whisky 40ML</button>
-    <button id="toggle">Inne 40ML</button>
-    <button id="toggle">Wino</button>
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Nazwa Shota</td>
+                    <td>10.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('shot1', -1)">-</span>
+                            <input type="number" id="shot1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('shot1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe shoty -->
+                <tr>
+                    <td>Nazwa Shota</td>
+                    <td>10.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('shot2', -1)">-</span>
+                            <input type="number" id="shot2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('shot2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    
+        <!-- Kategoria Piwo butelkowe -->
+        <button class="category-button" onclick="toggleCategory('piwo-butelkowe-div')">Piwo butelkowe</button>
+
+        <div id="piwo-butelkowe-div" class="category-div">
+
+            <h1>Piwo butelkowe</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Piwo butelkowe 1</td>
+                    <td>5.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('piwo-butelkowe-1', -1)">-</span>
+                            <input type="number" id="piwo-butelkowe-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('piwo-butelkowe-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Piwo butelkowe 2</td>
+                    <td>6.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('piwo-butelkowe-2', -1)">-</span>
+                            <input type="number" id="piwo-butelkowe-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('piwo-butelkowe-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe piwa butelkowe -->
+            </table>
+        </div>
+
+        <!-- Kategoria Napoje 0,2L -->
+        <button class="category-button" onclick="toggleCategory('napoje-02l-div')">Napoje 0,2L</button>
+
+        <div id="napoje-02l-div" class="category-div">
+
+            <h1>Napoje 0,2L</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Napój 0,2L 1</td>
+                    <td>3.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('napoje-02l-1', -1)">-</span>
+                            <input type="number" id="napoje-02l-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('napoje-02l-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Napój 0,2L 2</td>
+                    <td>3.50 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('napoje-02l-2', -1)">-</span>
+                            <input type="number" id="napoje-02l-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('napoje-02l-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe napoje 0,2L -->
+            </table>
+        </div>
+
+        <!-- Kategoria Soki 1L -->
+        <button class="category-button" onclick="toggleCategory('soki-1l-div')">Soki 1L</button>
+
+        <div id="soki-1l-div" class="category-div">
+
+            <h1>Soki 1L</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Sok 1L 1</td>
+                    <td>7.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('soki-1l-1', -1)">-</span>
+                            <input type="number" id="soki-1l-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('soki-1l-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sok 1L 2</td>
+                    <td>7.50 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('soki-1l-2', -1)">-</span>
+                            <input type="number" id="soki-1l-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('soki-1l-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe soki 1L -->
+            </table>
+        </div>
+
+        <!-- Kategoria Wódka butelka -->
+        <button class="category-button" onclick="toggleCategory('wodka-butelka-div')">Wódka butelka</button>
+
+        <div id="wodka-butelka-div" class="category-div">
+
+            <h1>Wódka butelka</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Wódka butelka 1</td>
+                    <td>25.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wodka-butelka-1', -1)">-</span>
+                            <input type="number" id="wodka-butelka-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wodka-butelka-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wódka butelka 2</td>
+                    <td>28.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wodka-butelka-2', -1)">-</span>
+                            <input type="number" id="wodka-butelka-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wodka-butelka-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe wódki butelkowe -->
+            </table>
+        </div>
+
+        <!-- Kategoria Whisky butelka -->
+        <button class="category-button" onclick="toggleCategory('whisky-butelka-div')">Whisky butelka</button>
+
+        <div id="whisky-butelka-div" class="category-div">
+
+            <h1>Whisky butelka</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Whisky butelka 1</td>
+                    <td>30.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-butelka-1', -1)">-</span>
+                            <input type="number" id="whisky-butelka-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-butelka-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Whisky butelka 2</td>
+                    <td>32.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-butelka-2', -1)">-</span>
+                            <input type="number" id="whisky-butelka-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-butelka-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe whisky butelkowe -->
+            </table>
+        </div>
+
+        <!-- Kategoria Wódki 40ML -->
+        <button class="category-button" onclick="toggleCategory('wodki-40ml-div')">Wódki 40ML</button>
+
+        <div id="wodki-40ml-div" class="category-div">
+
+            <h1>Wódki 40ML</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Wódka 40ML 1</td>
+                    <td>5.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wodki-40ml-1', -1)">-</span>
+                            <input type="number" id="wodki-40ml-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wodki-40ml-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wódka 40ML 2</td>
+                    <td>6.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wodki-40ml-2', -1)">-</span>
+                            <input type="number" id="wodki-40ml-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wodki-40ml-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe wódki 40ML -->
+            </table>
+        </div>
+
+        <!-- Kategoria Whisky 40ML -->
+        <button class="category-button" onclick="toggleCategory('whisky-40ml-div')">Whisky 40ML</button>
+
+        <div id="whisky-40ml-div" class="category-div">
+
+            <h1>Whisky 40ML</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Whisky 40ML 1</td>
+                    <td>8.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-40ml-1', -1)">-</span>
+                            <input type="number" id="whisky-40ml-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-40ml-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Whisky 40ML 2</td>
+                    <td>9.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-40ml-2', -1)">-</span>
+                            <input type="number" id="whisky-40ml-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('whisky-40ml-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe whisky 40ML -->
+            </table>
+        </div>
+
+        <!-- Kategoria Inne 40ML -->
+        <button class="category-button" onclick="toggleCategory('inne-40ml-div')">Inne 40ML</button>
+
+        <div id="inne-40ml-div" class="category-div">
+
+            <h1>Inne 40ML</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Inne 40ML 1</td>
+                    <td>7.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('inne-40ml-1', -1)">-</span>
+                            <input type="number" id="inne-40ml-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('inne-40ml-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Inne 40ML 2</td>
+                    <td>8.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('inne-40ml-2', -1)">-</span>
+                            <input type="number" id="inne-40ml-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('inne-40ml-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe inne 40ML -->
+            </table>
+        </div>
+    </div>
+
     <p>Suma: <span id="grandTotal">0.00 zł</span></p>
 
     <script>
-               const targetDiv = document.getElementById("koktajle-div");
-                const btn = document.getElementById("toggle");
-                btn.onclick = function () {
-                if (targetDiv.style.display !== "block") {
-                   targetDiv.style.display = "block";
-                  } else {
-                   targetDiv.style.display = "none";
-                 }
-};
-
+        function toggleCategory(categoryId) {
+            const categoryDiv = document.getElementById(categoryId);
+            if (categoryDiv.style.display !== "block") {
+                categoryDiv.style.display = "block";
+            } else {
+                categoryDiv.style.display = "none";
+            }
+        }
 
         // Funkcja obliczająca sumaryczną cenę produktów
         function calculateTotal() {
             const quantities = [
                 parseFloat(document.getElementById('product1').value) || 0,
                 parseFloat(document.getElementById('product2').value) || 0,
-                parseFloat(document.getElementById('product3').value) || 0,
-                parseFloat(document.getElementById('product4').value) || 0,
-                parseFloat(document.getElementById('product5').value) || 0,
-                parseFloat(document.getElementById('product6').value) || 0,
-                parseFloat(document.getElementById('product7').value) || 0,
-                parseFloat(document.getElementById('product8').value) || 0,
-                parseFloat(document.getElementById('product9').value) || 0,
-                parseFloat(document.getElementById('product10').value) || 0,
-                parseFloat(document.getElementById('product11').value) || 0,
-                parseFloat(document.getElementById('product12').value) || 0,
                 // Dodaj pozostałe produkty i ich ilości
+                parseFloat(document.getElementById('shot1').value) || 0,
+                parseFloat(document.getElementById('shot2').value) || 0,
+                // Dodaj pozostałe shoty i ich ilości
+                parseFloat(document.getElementById('piwo-butelkowe-1').value) || 0,
+                parseFloat(document.getElementById('piwo-butelkowe-2').value) || 0,
+                // Dodaj pozostałe piwa butelkowe i ich ilości
+                parseFloat(document.getElementById('napoje-02l-1').value) || 0,
+                parseFloat(document.getElementById('napoje-02l-2').value) || 0,
+                // Dodaj pozostałe napoje 0,2L i ich ilości
+                parseFloat(document.getElementById('soki-1l-1').value) || 0,
+                parseFloat(document.getElementById('soki-1l-2').value) || 0,
+                // Dodaj pozostałe soki 1L i ich ilości
+                parseFloat(document.getElementById('wodka-butelka-1').value) || 0,
+                parseFloat(document.getElementById('wodka-butelka-2').value) || 0,
+                // Dodaj pozostałe wódki butelkowe i ich ilości
+                parseFloat(document.getElementById('whisky-butelka-1').value) || 0,
+                parseFloat(document.getElementById('whisky-butelka-2').value) || 0,
+                // Dodaj pozostałe whisky butelkowe i ich ilości
+                parseFloat(document.getElementById('wodki-40ml-1').value) || 0,
+                parseFloat(document.getElementById('wodki-40ml-2').value) || 0,
+                // Dodaj pozostałe wódki 40ML i ich ilości
+                parseFloat(document.getElementById('whisky-40ml-1').value) || 0,
+                parseFloat(document.getElementById('whisky-40ml-2').value) || 0,
+                // Dodaj pozostałe whisky 40ML i ich ilości
+                parseFloat(document.getElementById('inne-40ml-1').value) || 0,
+                parseFloat(document.getElementById('inne-40ml-2').value) || 0,
+                // Dodaj pozostałe inne 40ML i ich ilości
             ];
 
-            const prices = [27.00, 28.00, 26.00, 22.00, 24.00, 27.00, 26.00, 22.00, 24.00, 27.00, 28.00, 33.00]; // Ceny jednostkowe
-            // Dodaj pozostałe produkty i ich ceny jednostkowe
+            const prices = [
+                27.00,
+                28.00,
+                // Dodaj pozostałe ceny koktajli
+                10.00,
+                12.00,
+                // Dodaj pozostałe ceny shotów
+                5.00,
+                6.00,
+                // Dodaj pozostałe ceny piw butelkowych
+                3.00,
+                3.50,
+                // Dodaj pozostałe ceny napojów 0,2L
+                7.00,
+                7.50,
+                // Dodaj pozostałe ceny soków 1L
+                25.00,
+                28.00,
+                // Dodaj pozostałe ceny wódek butelkowych
+                30.00,
+                32.00,
+                // Dodaj pozostałe ceny whisky butelkowych
+                5.00,
+                6.00,
+                // Dodaj pozostałe ceny wódek 40ML
+                8.00,
+                9.00,
+                // Dodaj pozostałe ceny whisky 40ML
+                7.00,
+                8.00,
+                // Dodaj pozostałe ceny innych 40ML
+            ];
 
             let grandTotal = 0;
 
             for (let i = 0; i < quantities.length; i++) {
                 const total = quantities[i] * prices[i];
                 grandTotal += total;
-                const totalId = 'total' + (i + 1);
-                document.getElementById(totalId).textContent = total.toFixed(2) + ' zł';
             }
 
             document.getElementById('grandTotal').textContent = grandTotal.toFixed(2) + ' zł';
@@ -328,4 +598,5 @@
         calculateTotal();
     </script>
 </body>
+
 </html>
