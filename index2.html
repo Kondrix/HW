@@ -6,7 +6,7 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             padding: 20px;
-            margin: 0;
+            margin: 0%;
             padding: 0;
         }
 
@@ -29,8 +29,22 @@
             text-align: left;
         }
 
-        input {
-            width: 100%;
+        .quantity-container {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="number"] {
+            width: auto;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .quantity-button {
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
         }
 
         .highlight {
@@ -57,50 +71,36 @@
         <tr>
             <td>Produkt 1</td>
             <td>10.00 zł</td>
-            <td><input type="number" id="product1" value="0" min="0"></td>
+            <td>
+                <div class="quantity-container">
+                    <span class="quantity-button" onclick="decrementQuantity('product1')">-</span>
+                    <input type="number" id="product1" value="0" min="0" oninput="calculateTotal()">
+                    <span class="quantity-button" onclick="incrementQuantity('product1')">+</span>
+                </div>
+            </td>
             <td id="total1">0.00 zł</td>
         </tr>
+        <!-- Pozostałe wiersze produktów -->
+    </table>
+    <h1>Soki</h1>
+    <table>
+        <tr>
+            <th>Produkt</th>
+            <th>Cena jednostkowa</th>
+            <th>Ilość</th>
+            <th>Suma</th>
+        </tr>
         <tr>
             <td>Produkt 1</td>
             <td>10.00 zł</td>
-            <td><input type="number" id="product2" value="0" min="0"></td>
+            <td>
+                <div class="quantity-container">
+                    <span class="quantity-button" onclick="decrementQuantity('product2')">-</span>
+                    <input type="number" id="product2" value="0" min="0" oninput="calculateTotal()">
+                    <span class="quantity-button" onclick="incrementQuantity('product2')">+</span>
+                </div>
+            </td>
             <td id="total2">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product3" value="0" min="0"></td>
-            <td id="total3">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product4" value="0" min="0"></td>
-            <td id="total4">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product5" value="0" min="0"></td>
-            <td id="total5">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product6" value="0" min="0"></td>
-            <td id="total6">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product7" value="0" min="0"></td>
-            <td id="total7">0.00 zł</td>
-        </tr>
-        <tr>
-            <td>Produkt 1</td>
-            <td>10.00 zł</td>
-            <td><input type="number" id="product8" value="0" min="0"></td>
-            <td id="total8">0.00 zł</td>
         </tr>
         <!-- Pozostałe wiersze produktów -->
     </table>
@@ -112,16 +112,12 @@
         function calculateTotal() {
             const quantities = [
                 parseFloat(document.getElementById('product1').value) || 0,
-                parseFloat(document.getElementById('product2').value) || 0,
-                parseFloat(document.getElementById('product3').value) || 0,
-                parseFloat(document.getElementById('product4').value) || 0,
-                parseFloat(document.getElementById('product5').value) || 0,
-                parseFloat(document.getElementById('product6').value) || 0,
-                parseFloat(document.getElementById('product7').value) || 0,
-                parseFloat(document.getElementById('product8').value) || 0
+                parseFloat(document.getElementById('product2').value) || 0
+                // Dodaj kolejne produkty i ich ilości
             ];
 
-            const prices = [10.00, 20.00, 10.00, 20.00, 10.00, 20.00, 10.00, 20.00]; // Ceny jednostkowe
+            const prices = [10.00, 10.00]; // Ceny jednostkowe
+            // Dodaj kolejne produkty i ich ceny jednostkowe
 
             let grandTotal = 0;
 
@@ -154,11 +150,26 @@
             });
         }
 
-        // Nasłuchuj zmian w ilości produktów i oblicz sumę
-        const inputElements = document.querySelectorAll('input[type="number"]');
-        inputElements.forEach(input => {
-            input.addEventListener('input', calculateTotal);
-        });
+        // Funkcja do zwiększania ilości produktu
+        function incrementQuantity(productId) {
+            const input = document.getElementById(productId);
+            if (input) {
+                input.value = (parseFloat(input.value) || 0) + 1;
+                calculateTotal();
+            }
+        }
+
+        // Funkcja do zmniejszania ilości produktu
+        function decrementQuantity(productId) {
+            const input = document.getElementById(productId);
+            if (input) {
+                const currentValue = parseFloat(input.value) || 0;
+                if (currentValue > 0) {
+                    input.value = currentValue - 1;
+                    calculateTotal();
+                }
+            }
+        }
 
         // Wywołaj funkcję obliczeniową na początku, aby wyświetlić sumę początkową
         calculateTotal();
