@@ -40,11 +40,14 @@
 
         .quantity-button {
             cursor: pointer;
-            padding: 5px;
-            border: 1px solid #ccc;
+            padding: 10px;
+            border: 2px solid #ccc;
             border-radius: 50%;
             margin-left: 5px;
             margin-right: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            
         }
 
         input {
@@ -60,7 +63,9 @@
         #whisky-butelka-div,
         #wodki-40ml-div,
         #whisky-40ml-div,
-        #inne-40ml-div {
+        #inne-40ml-div,
+        #jedzenie-div,
+        #wino-div {
             display: none;
         }
 
@@ -77,7 +82,7 @@
 
         @media screen and (max-width: 600px) {
             table {
-                font-size: 12px;
+                font-size: 15px;
             }
         }
     </style>
@@ -459,7 +464,7 @@
                 </tr>
                 <tr>
                     <td>Cappy pomarańcz</td>
-                    <td>9.00</td>
+                    <td>9.00 zł</td>
                     <td>
                         <div class="quantity-container">
                             <span class="quantity-button" onclick="changeQuantity('napoje-02l-6', -1)">-</span>
@@ -915,7 +920,92 @@
             </table>
         </div>
     </div>
+    <button class="category-button" onclick="toggleCategory('wino-div')">Wino</button>
 
+        <div id="wino-div" class="category-div">
+
+            <h1>Wino</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Kieliszek</td>
+                    <td>15.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wino-1', -1)">-</span>
+                            <input type="number" id="wino-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wino-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Karafka 1L</td>
+                    <td>59.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('wino-2', -1)">-</span>
+                            <input type="number" id="wino-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('wino-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+               
+                <!-- Pozostałe wódki 40ML -->
+            </table>
+        </div>
+    <button class="category-button" onclick="toggleCategory('jedzenie-div')">Jedzenie</button>
+
+        <div id="jedzenie-div" class="category-div">
+
+            <h1>Jedzenie</h1>
+
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Cena jednostkowa</th>
+                    <th>Ilość</th>
+                </tr>
+                <tr>
+                    <td>Burger</td>
+                    <td>47.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-1', -1)">-</span>
+                            <input type="number" id="jedzenie-1" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-1', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Burrito</td>
+                    <td>43.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-2', -1)">-</span>
+                            <input type="number" id="jedzenie-2" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-2', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Chili Con Carne</td>
+                    <td>39.00 zł</td>
+                    <td>
+                        <div class="quantity-container">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-3', -1)">-</span>
+                            <input type="number" id="jedzenie-3" value="0" min="0" oninput="calculateTotal()">
+                            <span class="quantity-button" onclick="changeQuantity('jedzenie-3', 1)">+</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Pozostałe wódki 40ML -->
+            </table>
+        </div>
     <p>Suma: <span id="grandTotal">0.00 zł</span></p>
 
     <script>
@@ -1001,6 +1091,13 @@
                 parseFloat(document.getElementById('inne-40ml-8').value) || 0,
                 parseFloat(document.getElementById('inne-40ml-9').value) || 0,
                 // Dodaj pozostałe inne 40ML i ich ilości
+                parseFloat(document.getElementById('wino-1').value) || 0,
+                parseFloat(document.getElementById('wino-2').value) || 0,
+                //wino
+                parseFloat(document.getElementById('jedzenie-1').value) || 0,
+                parseFloat(document.getElementById('jedzenie-2').value) || 0,
+                parseFloat(document.getElementById('jedzenie-3').value) || 0,
+                //jedzenie
             ];
 
             const prices = [
@@ -1074,7 +1171,13 @@
                 12.00,
                 11.00,
                 10.00,
+                //wino
+                15.00,
+                59.00,
                 // Dodaj pozostałe ceny innych 40ML
+                47.00,
+                43.00,
+                39.00,
             ];
 
             let grandTotal = 0;
