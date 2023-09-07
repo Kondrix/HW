@@ -85,6 +85,18 @@
                 font-size: 15px;
             }
         }
+        #suma {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    background-color: rgba(255, 255, 255, 0.9); /* Półprzeźroczyste tło */
+    padding: 10px;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.2); /* Cień na dole */
+    z-index: 999; /* Upewnij się, że będzie na wierzchu innych elementów */
+    border-radius: 10px; /* Zaokrąglenie górnego lewego rogu */
+    font-weight: bold;        
+}
     </style>
 </head>
 
@@ -1006,8 +1018,9 @@
                 <!-- Pozostałe wódki 40ML -->
             </table>
         </div>
-    <p>Suma: <span id="grandTotal">0.00 zł</span></p>
-
+        <div id="suma">
+            <p>Suma: <span id="grandTotal">0.00 zł</span></p>
+        </div>
     <script>
         function toggleCategory(categoryId) {
             const categoryDiv = document.getElementById(categoryId);
