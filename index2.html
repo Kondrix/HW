@@ -53,6 +53,14 @@
         input {
             max-width: 30px;
         }
+        button.zamow {
+            width: 100%;
+            height: 50px;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: gray;
+            color: white;
+            }
 
         #koktajle-div,
         #shoty-div,
@@ -65,7 +73,8 @@
         #whisky-40ml-div,
         #inne-40ml-div,
         #jedzenie-div,
-        #wino-div {
+        #wino-div,
+        #bloczek {
             display: none;
         }
         #jedzenie-div
@@ -936,7 +945,7 @@
             </table>
         </div>
     </div>
-    <button class="category-button" onclick="toggleCategory('wino-div')">Wino</button>
+    <button class="category-button" id="bcolor" onclick="toggleCategory('wino-div')">Wino</button>
 
         <div id="wino-div" class="category-div">
 
@@ -974,7 +983,7 @@
                 <!-- Pozostałe wódki 40ML -->
             </table>
         </div>
-    <button class="category-button" onclick="toggleCategory('jedzenie-div')">Jedzenie</button>
+    <button class="category-button"  onclick="toggleCategory('jedzenie-div')">Jedzenie</button>
 
         <div id="jedzenie-div" class="category-div">
 
@@ -1025,7 +1034,12 @@
         <div id="suma">
             <p>Suma: <span id="grandTotal">0.00 zł</span></p>
         </div>
+        <button class="zamow"  onclick="toggleCategory('bloczek')">Zamowienie</button>
+        <div id="bloczek"></div>
     <script>
+
+
+
         function toggleCategory(categoryId) {
             const categoryDiv = document.getElementById(categoryId);
             if (categoryDiv.style.display !== "block") {
@@ -1208,9 +1222,9 @@
 
             // Podświetl wiersze z ilościami większymi od 0
             highlightRows();
+            createProductTable();
         }
 
-        // Funkcja podświetlająca wiersze z ilościami większymi od 0
         function highlightRows() {
             const rows = document.querySelectorAll('tr');
             rows.forEach(row => {
@@ -1225,6 +1239,79 @@
                 }
             });
         }
+
+        function createProductTable() {
+    const bloczekDiv = document.getElementById('bloczek');
+
+    if (!bloczekDiv) {
+        console.error('Div o id "bloczek" nie został znaleziony.');
+        return;
+    }
+
+    // Pobieranie tabeli, jeśli istnieje
+    const existingTable = document.getElementById('productTable');
+    let tableBody;
+
+    // Jeśli tabela już istnieje, użyj jej ciała, w przeciwnym razie utwórz nową tabelę
+    if (existingTable) {
+        tableBody = existingTable.querySelector('tbody');
+        tableBody.innerHTML = ''; // Wyczyść zawartość istniejącego ciała tabeli
+    } else {
+        // Tworzenie nowej tabeli, jeśli nie istnieje
+        const newTable = document.createElement('table');
+        tableBody = document.createElement('tbody');
+        newTable.id = 'productTable'; // Nadaj id nowej tabeli
+        newTable.appendChild(tableBody);
+        bloczekDiv.appendChild(newTable);
+    }
+
+    // Obiekt do przechowywania produktów i ich ilości
+    const productMap = {};
+
+    // Pobieranie wszystkich wierszy z tabeli
+    const rows = document.querySelectorAll('tr');
+
+    rows.forEach(row => {
+        const input = row.querySelector('input[type="number"]');
+        if (input) {
+            const quantity = parseFloat(input.value) || 0;
+            if (quantity > 0) {
+                // Pobieranie nazwy produktu z pierwszej komórki w wierszu
+                const productName = row.querySelector('td:first-child').textContent;
+
+                // Dodawanie lub aktualizacja ilości produktu w mapie
+                if (productMap[productName]) {
+                    productMap[productName] += quantity;
+                } else {
+                    productMap[productName] = quantity;
+                }
+            }
+        }
+    });
+
+    // Tworzenie i aktualizacja wierszy na podstawie mapy produktów i ich ilości
+    for (const productName in productMap) {
+        const newRow = document.createElement('tr');
+
+        // Dodawanie komórek z nazwą produktu i ilością
+        const nameCell = document.createElement('td');
+        nameCell.textContent = productName;
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = productMap[productName];
+
+        newRow.appendChild(nameCell);
+        newRow.appendChild(quantityCell);
+
+        // Dodawanie lub aktualizacja wiersza w tabeli
+        const existingRow = tableBody.querySelector(`tr[data-product="${productName}"]`);
+        if (existingRow) {
+            tableBody.replaceChild(newRow, existingRow);
+        } else {
+            newRow.setAttribute('data-product', productName); // Ustaw atrybut z nazwą produktu
+            tableBody.appendChild(newRow);
+        }
+    }
+}
 
         // Funkcja do zmiany ilości produktu
         function changeQuantity(productId, change) {
