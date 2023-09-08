@@ -53,21 +53,42 @@
         input {
             max-width: 30px;
         }
-        button.zamow {
+       
+            #bloczek {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 50px;
-            font-size: 15px;
-            font-weight: bold;
-            background-color: gray;
-            color: white;
-            }
-        #bloczek
-        {
-            display: none;
-            font-size: 20px;
             height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Przezroczyste tło okna */
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #okno {
+            width: 80%;
+            max-width: 100%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        table#productTable
+        {
             font-weight: bold;
-            margin-bottom: 50%;
+            table-layout: auto;
+
+        }
+
+
+        #zamknij {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
         }
         #koktajle-div,
         #shoty-div,
@@ -1038,13 +1059,36 @@
                 <!-- Pozostałe wódki 40ML -->
             </table>
         </div>
-        <div id="suma">
-            <p>Suma: <span id="grandTotal">0.00 zł</span></p>
+        <div id="suma" onclick="otworzOkno()">
+            <p>Suma: <span id="grandTotal" >0.00 zł</span></p>
+            
         </div>
-        <button class="zamow"  onclick="toggleCategory('bloczek')">Zamowienie</button>
-        <div id="bloczek"></div>
+       
+
+        <div id="bloczek">
+
+            <div id="okno">
+                <span id="zamknij" onclick="zamknijOkno()">X</span>
+                <!-- Tu możesz dodać zawartość okna -->
+                <h2>Zamówienia</h2>
+                
+            </div>
+        </div>
+
     <script>
 
+
+        // Funkcja otwierająca okno
+        function otworzOkno() {
+            var okno = document.getElementById("bloczek");
+            okno.style.display = "flex";
+        }
+
+        // Funkcja zamykająca okno
+        function zamknijOkno() {
+            var okno = document.getElementById("bloczek");
+            okno.style.display = "none";
+        }
 
 
         function toggleCategory(categoryId) {
@@ -1248,7 +1292,7 @@
         }
 
         function createProductTable() {
-    const bloczekDiv = document.getElementById('bloczek');
+    const bloczekDiv = document.getElementById('okno');
 
     if (!bloczekDiv) {
         console.error('Div o id "bloczek" nie został znaleziony.');
