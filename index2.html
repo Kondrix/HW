@@ -33,6 +33,8 @@
             text-align: left;
         }
 
+ 
+
         .quantity-container {
             display: flex;
             align-items: center;
@@ -165,6 +167,12 @@
         height: 100%;
         width: 100%;
         
+    }
+    #sumazam
+    {
+        text-align: left;
+        font-size: 25px;
+        font-weight: bold;
     }
         #suma {
     position: fixed;
@@ -1106,7 +1114,7 @@
             </table>
         </div>
     </div>
-        <div id="suma" onclick="otworzOkno()">
+        <div id="suma" onclick="otworzOkno()" onclick="hide()">
             <p>Suma: <span id="grandTotal" >0.00 zł</span></p>
             
         </div>
@@ -1117,12 +1125,15 @@
             <div id="okno">
                 <span id="zamknij" onclick="zamknijOkno()">X</span>
                 <!-- Tu możesz dodać zawartość okna -->
+               <div id="sumazam"><a>Suma: <a id="grandTotal1" >0.00 zł</a></a>
+               </div>
                 <h2>Zamówienia</h2>
                 
             </div>
         
 
     <script>
+
 
 
         // Funkcja otwierająca okno
@@ -1136,8 +1147,26 @@
             var okno = document.getElementById("bloczek");
             okno.style.display = "none";
         }
+        function otworzOkno() {
+  var okno = document.getElementById("bloczek");
+  var sumaDiv = document.getElementById("suma");
+  
+  okno.style.display = "flex";
+  sumaDiv.style.display = "none"; // Lub inny odpowiedni styl, jeśli jest potrzebny
+}
 
+// Funkcja zamykająca okno i zmieniająca styl diva o id "suma"
+function zamknijOkno() {
+  var okno = document.getElementById("bloczek");
+  var sumaDiv = document.getElementById("suma");
+  
+  okno.style.display = "none";
+  sumaDiv.style.display = "flex";
+}
+      
 
+// Wywołanie funkcji:
+zmienStylNaNoneJesliFlex();
         function toggleCategory(categoryId) {
             const categoryDiv = document.getElementById(categoryId);
             if (categoryDiv.style.display !== "block") {
@@ -1317,6 +1346,15 @@
             }
 
             document.getElementById('grandTotal').textContent = grandTotal.toFixed(2) + ' zł';
+
+            let grandTotal1 = 0;
+
+            for (let i = 0; i < quantities.length; i++) {
+                const total = quantities[i] * prices[i];
+                grandTotal1 += total;
+            }
+
+            document.getElementById('grandTotal1').textContent = grandTotal1.toFixed(2) + ' zł';
 
             // Podświetl wiersze z ilościami większymi od 0
             highlightRows();
